@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { BookOpen, ExternalLink, FilePlus2 } from "lucide-react";
+import { BookOpen, Building2, ExternalLink, FilePlus2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata = { title: "Redaktion" };
@@ -20,7 +20,7 @@ export default async function EditorialLayout({ children }: { children: React.Re
         <small>REDAKTION</small>
         <nav>
           <Link href="/redaktion"><BookOpen /> Artiklar</Link>
-          <Link href="/redaktion/ny"><FilePlus2 /> Ny artikel</Link>
+          <Link href="/redaktion/ny"><FilePlus2 /> Ny artikel</Link>\n          <Link href="/redaktion/partners"><Building2 /> Partnerförfrågningar</Link>
           <Link href="/guider"><ExternalLink /> Visa guider</Link>
         </nav>
       </aside>
