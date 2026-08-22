@@ -14,18 +14,26 @@ function money(value: number) {
 }
 
 export function RoofCalculator() {
-  const [area, setArea] = useState(140);
+  const [area, setArea] = useState("140");
   const [material, setMaterial] = useState<keyof typeof materials>("betong");
   const [complexity, setComplexity] = useState(1);
+  const numericArea = Math.min(1000, Math.max(0, Number(area) || 0));
 
   const estimate = useMemo(() => {
     const selected = materials[material];
-    return { low: area * selected.low * complexity, high: area * selected.high * complexity };
-  }, [area, material, complexity]);
+    return { low: numericArea * selected.low * complexity, high: numericArea * selected.high * complexity };
+  }, [numericArea, material, complexity]);
+
+  function validateArea() {
+    const value = Number(area);
+    if (!Number.isFinite(value) || value < 20) setArea("20");
+    else if (value > 1000) setArea("1000");
+    else setArea(String(Math.round(value)));
+  }
 
   return <div className="roof-calculator">
     <div className="calculator-fields">
-      <label>Ungefärlig takyta, m²<input type="number" min="20" max="1000" value={area} onChange={(event) => setArea(Math.max(20, Number(event.target.value) || 20))} /></label>
+      <label>Ungefärlig takyta, m²<input type="number" min="20" max="1000" inputMode="numeric" value={area} onChange={(event) => setArea(event.target.value)} onBlur={validateArea} /></label>
       <label>Takmaterial<select value={material} onChange={(event) => setMaterial(event.target.value as keyof typeof materials)}>{Object.entries(materials).map(([key, item]) => <option value={key} key={key}>{item.label}</option>)}</select></label>
       <label>Takets komplexitet<select value={complexity} onChange={(event) => setComplexity(Number(event.target.value))}><option value="0.9">Enkelt sadeltak</option><option value="1">Normalt tak</option><option value="1.2">Flera vinklar eller kupor</option><option value="1.4">Brant eller komplicerat</option></select></label>
     </div>
