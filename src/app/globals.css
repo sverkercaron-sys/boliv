@@ -667,3 +667,48 @@ button, input { font: inherit; }
   .partner-placement-table article { grid-template-columns: 1fr; }
   .partner-admin-section { padding: 16px; }
 }
+
+/* Automated sales engine */
+.sales-engine { max-width: 1180px; }
+.sales-add-prospect { margin: 20px 0 24px; border: 1px solid var(--line); border-radius: 16px; background: #fff; }
+.sales-add-prospect summary { display: flex; align-items: center; gap: 9px; padding: 18px 20px; color: var(--green); font-weight: 900; cursor: pointer; }
+.sales-add-prospect summary svg { width: 19px; }
+.sales-add-prospect form { padding: 0 20px 22px; border-top: 1px solid var(--line); }
+.sales-section { margin-top: 22px; padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: #fff; }
+.sales-section .panel-heading > span { color: var(--ink-soft); font-size: 12px; }
+.sales-message-list { display: grid; gap: 14px; }
+.sales-message-list article { overflow: hidden; border: 1px solid var(--line); border-radius: 15px; }
+.sales-message-list article.approved { border-color: #a9cdbd; }
+.sales-message-list header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding: 18px 20px; background: var(--mint-light); }
+.sales-message-list header small, .sales-message-list header span { display: block; color: var(--ink-soft); font-size: 11px; }
+.sales-message-list header h3 { margin: 3px 0; }
+.sales-message-list header b { padding: 5px 9px; border-radius: 999px; color: #755b22; background: #faedcc; font-size: 10px; text-transform: uppercase; }
+.sales-message-list article.approved header b { color: #24613e; background: #dff1e4; }
+.sales-message-form { display: grid; gap: 14px; padding: 20px; }
+.sales-message-form label { display: grid; gap: 6px; font-size: 12px; font-weight: 800; }
+.sales-message-form input, .sales-message-form textarea { width: 100%; padding: 11px 13px; border: 1px solid #cedbd5; border-radius: 10px; font: inherit; }
+.sales-message-form textarea { resize: vertical; line-height: 1.55; }
+.sales-message-form .button { width: max-content; border: 0; }
+.sales-approved { padding: 20px; }
+.sales-approved pre { overflow-x: auto; margin: 0 0 18px; padding: 18px; border-radius: 11px; background: #f7f8f7; white-space: pre-wrap; font: 13px/1.55 Arial, sans-serif; }
+.sales-approved button { border: 0; }
+.sales-message-list footer { display: flex; align-items: center; gap: 6px; padding: 10px 20px; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: 11px; }
+.sales-message-list footer svg { width: 15px; }
+.sales-prospect-table { display: grid; gap: 8px; }
+.sales-prospect-table article { display: grid; grid-template-columns: minmax(220px,1fr) 55px 110px 95px; align-items: center; gap: 14px; padding: 14px 16px; border: 1px solid #e8eeeb; border-radius: 12px; }
+.sales-prospect-table small, .sales-prospect-table strong, .sales-prospect-table div > span { display: block; }
+.sales-prospect-table small { color: var(--green-2); font-size: 10px; font-weight: 800; }
+.sales-prospect-table div > span { color: var(--ink-soft); font-size: 11px; }
+.sales-prospect-table > article > b { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: var(--green); font-size: 12px; }
+.sales-status { font-size: 11px; font-weight: 800; text-transform: uppercase; }
+.sales-prospect-table form button { display: flex; align-items: center; gap: 5px; padding: 7px 9px; border: 1px solid #e4cbc7; border-radius: 8px; color: #8b342f; background: #fff; font-size: 11px; font-weight: 800; cursor: pointer; }
+.sales-prospect-table form svg { width: 14px; }
+.unsubscribe-card { text-align: center; }
+.unsubscribe-card .auth-icon { margin-inline: auto; }
+.unsubscribe-card .button { margin-top: 8px; }
+
+@media (max-width: 700px) {
+  .sales-section { padding: 15px; }
+  .sales-prospect-table article { grid-template-columns: 1fr 55px; }
+  .sales-prospect-table article > span, .sales-prospect-table article > form { grid-column: 1 / 3; }
+}
