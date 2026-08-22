@@ -95,12 +95,12 @@ export async function setArticleStatus(formData: FormData) {
   revalidateArticle(data?.slug);
 }
 
-export async function deleteArticle(formData: FormData) {
+export async function archiveArticle(formData: FormData) {
   const { supabase } = await requireEditor();
   const id = String(formData.get("id") ?? "");
   const slug = String(formData.get("slug") ?? "");
   if (!id) return;
-  await supabase.from("content_items").delete().eq("id", id);
+  await supabase.from("content_items").update({ status: "archived", updated_at: new Date().toISOString() }).eq("id", id);
   revalidateArticle(slug);
-  redirect("/redaktion?success=Artikeln+är+raderad");
+  redirect("/redaktion?success=Artikeln+är+arkiverad");
 }
