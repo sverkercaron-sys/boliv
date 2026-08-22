@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Eye, Save } from "lucide-react";
+import { Archive, ArrowLeft, Eye, Save } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { updateArticle } from "../actions";
 import { DeleteArticleButton } from "@/components/delete-article-button";
