@@ -11,16 +11,22 @@ export const metadata = { title: "Mitt BoLiv" };
 export default async function DashboardPage() {
   let properties: Property[] = [];
   let tasks: Task[] = [];
+  let activeProjects = 0;
+  let documents = 0;
   const configured = isSupabaseConfigured();
 
   if (configured) {
     const supabase = await createClient();
-    const [propertyResult, taskResult] = await Promise.all([
+    const [propertyResult, taskResult, projectResult, documentResult] = await Promise.all([
       supabase.from("properties").select("id,name,city,property_type").order("created_at"),
       supabase.from("maintenance_tasks").select("id,title,due_date,property_id").neq("status", "completed").order("due_date").limit(5),
+      supabase.from("projects").select("id", { count: "exact", head: true }).neq("status", "completed"),
+      supabase.from("documents").select("id", { count: "exact", head: true }),
     ]);
     properties = propertyResult.data ?? [];
     tasks = taskResult.data ?? [];
+    activeProjects = projectResult.count ?? 0;
+    documents = documentResult.count ?? 0;
   }
 
   return (
@@ -37,8 +43,8 @@ export default async function DashboardPage() {
       <div className="dashboard-stats">
         <div><Building2 /><span><strong>{properties.length}</strong><small>Fastigheter</small></span></div>
         <div><CalendarCheck /><span><strong>{tasks.length}</strong><small>Kommande uppgifter</small></span></div>
-        <div><FolderKanban /><span><strong>0</strong><small>Aktiva projekt</small></span></div>
-        <div><FileText /><span><strong>0</strong><small>Dokument</small></span></div>
+        <div><FolderKanban /><span><strong>{activeProjects}</strong><small>Aktiva projekt</small></span></div>
+        <div><FileText /><span><strong>{documents}</strong><small>Dokument</small></span></div>
       </div>
 
       <section className="dashboard-grid">
