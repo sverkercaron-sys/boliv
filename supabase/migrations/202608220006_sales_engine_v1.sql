@@ -55,7 +55,7 @@ create table if not exists public.sales_suppressions (
   created_at timestamptz not null default now()
 );
 create unique index if not exists sales_suppressions_email_unique
-  on public.sales_suppressions (lower(email));
+  on public.sales_suppressions (email);
 
 alter table public.sales_prospects enable row level security;
 alter table public.sales_messages enable row level security;
@@ -83,7 +83,7 @@ begin
   if prospect_email is null then return false; end if;
   insert into public.sales_suppressions (email, reason, source)
   values (prospect_email, 'opt_out', 'unsubscribe_link')
-  on conflict (lower(email)) do nothing;
+  on conflict (email) do nothing;
   update public.sales_prospects set status = 'suppressed', updated_at = now()
   where lower(email) = lower(prospect_email);
   update public.sales_messages set status = 'cancelled'
