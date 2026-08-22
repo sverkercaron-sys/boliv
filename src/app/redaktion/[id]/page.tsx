@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { Archive, ArrowLeft, Eye, Save } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { archiveArticle, updateArticle } from "../actions";
-import { DeleteArticleButton } from "@/components/delete-article-button";
 
 type Section = { heading?: string; paragraphs?: string[]; bullets?: string[] };
 type Article = {
