@@ -13,9 +13,9 @@ import {
 import { categories } from "@/data/categories";
 
 const featuredGuides = [
-  { kicker: "Tak", title: "Dags att byta tak? Det här behöver du veta", meta: "12 min läsning", href: "/renovera/tak/byta-tak" },
-  { kicker: "Badrum", title: "Vad kostar det att renovera ett badrum?", meta: "Kostnadsguide 2026", href: "/renovera/badrum/kostnad" },
-  { kicker: "Köpa hus", title: "Den kompletta checklistan för husvisningen", meta: "Spara som checklista", href: "/checklistor/husvisning" },
+  { kicker: "Tak", title: "Dags att byta tak? Det här behöver du veta", meta: "12 min läsning", href: "/guider/byta-tak" },
+  { kicker: "Badrum", title: "Vad kostar det att renovera ett badrum?", meta: "Kostnadsguide 2026", href: "/guider/renovera-badrum-kostnad" },
+  { kicker: "Köpa hus", title: "Den kompletta checklistan för husvisningen", meta: "Spara som checklista", href: "/guider/checklista-husvisning" },
 ];
 
 export default function HomePage() {
@@ -37,9 +37,9 @@ export default function HomePage() {
             </form>
             <div className="popular-searches">
               <span>Populärt:</span>
-              <Link href="/renovera/tak/byta-tak">Byta tak</Link>
-              <Link href="/energi/varmepumpar">Värmepump</Link>
-              <Link href="/renovera/badrum">Badrum</Link>
+              <Link href="/guider/byta-tak">Byta tak</Link>
+              <Link href="/guider/valja-varmepump">Värmepump</Link>
+              <Link href="/guider/renovera-badrum-kostnad">Badrum</Link>
             </div>
           </div>
           <div className="hero-card">
