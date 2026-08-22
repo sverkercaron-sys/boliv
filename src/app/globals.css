@@ -466,7 +466,7 @@ button, input { font: inherit; }
 }
 
 
-/* Editorial tools v2 */
+/* Editorial tools v2 — edit, preview and publishing */
 .editor-form-tools { display: flex; align-items: center; justify-content: space-between; }
 .preview-link { display: inline-flex; align-items: center; gap: 7px; margin-bottom: 24px; color: var(--green-2); font-size: 13px; font-weight: 800; }
 .preview-link svg { width: 17px; }
