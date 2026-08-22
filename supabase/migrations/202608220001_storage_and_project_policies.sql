@@ -1,5 +1,15 @@
 -- BoLiv project and private document storage policies
 
+-- Add the project and document metadata used by Mitt BoLiv.
+-- "if not exists" keeps this migration safe for projects created from the fuller schema.
+alter table public.projects add column if not exists project_type text;
+alter table public.projects add column if not exists planned_start date;
+alter table public.projects add column if not exists planned_end date;
+alter table public.projects add column if not exists actual_start date;
+alter table public.projects add column if not exists actual_end date;
+alter table public.projects add column if not exists notes text;
+alter table public.documents add column if not exists document_date date;
+
 alter table public.user_roles enable row level security;
 alter table public.projects enable row level security;
 alter table public.documents enable row level security;
