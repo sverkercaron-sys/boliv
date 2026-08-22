@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, BookOpen, Search } from "lucide-react";
-import { categoryLabels, guides } from "@/data/guides";
+import { categoryLabels } from "@/data/guides";
+import { getAllPublishedGuides } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Guider för hus och hem",
   description: "Praktiska och oberoende guider om att bygga, renovera, underhålla, köpa och finansiera en bostad.",
 };
 
-export default function GuidesPage() {
+export default async function GuidesPage() {
+  const guides = await getAllPublishedGuides();
   return (
     <main>
       <section className="guide-archive-hero">
@@ -23,12 +25,9 @@ export default function GuidesPage() {
           </form>
         </div>
       </section>
-
       <section className="section container">
         <div className="guide-category-links">
-          {Object.entries(categoryLabels).map(([slug, label]) => (
-            <Link href={`/${slug}`} key={slug}>{label}</Link>
-          ))}
+          {Object.entries(categoryLabels).map(([slug, label]) => <Link href={`/${slug}`} key={slug}>{label}</Link>)}
         </div>
         <div className="section-heading">
           <div><span className="kicker">Senast uppdaterat</span><h2>Alla guider</h2></div>
@@ -40,8 +39,7 @@ export default function GuidesPage() {
               <Link href={`/guider/${guide.slug}`}>
                 <span className="library-icon"><BookOpen /></span>
                 <small>{guide.categoryLabel} · {guide.readingTime}</small>
-                <h2>{guide.title}</h2>
-                <p>{guide.description}</p>
+                <h2>{guide.title}</h2><p>{guide.description}</p>
                 <span className="read-link">Läs guiden <ArrowRight /></span>
               </Link>
             </article>
