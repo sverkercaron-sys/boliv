@@ -37,7 +37,7 @@ export default function HomePage() {
             </form>
             <div className="popular-searches">
               <span>Populärt:</span>
-              <Link href="/guider/byta-tak">Byta tak</Link>
+              <Link href="/renovera/tak">Byta tak</Link>
               <Link href="/guider/valja-varmepump">Värmepump</Link>
               <Link href="/guider/renovera-badrum-kostnad">Badrum</Link>
             </div>

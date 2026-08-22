@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Clock, ShieldCheck } from "lucide-react";
 import { guides as staticGuides } from "@/data/guides";
 import { getAllPublishedGuides, getPublishedGuide } from "@/lib/content";
+import { roofGuideSet } from "@/data/roof";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -25,7 +26,8 @@ export default async function GuidePage({ params }: Props) {
   const guide = await getPublishedGuide((await params).slug);
   if (!guide) notFound();
   const allGuides = await getAllPublishedGuides();
-  const related = allGuides.filter((item) => item.category === guide.category && item.slug !== guide.slug).slice(0, 2);
+  const inRoofCluster = roofGuideSet.has(guide.slug);
+  const related = allGuides.filter((item) => (inRoofCluster ? roofGuideSet.has(item.slug) : item.category === guide.category) && item.slug !== guide.slug).slice(0, 2);
   const jsonLd = {
     "@context": "https://schema.org", "@type": "Article", headline: guide.title,
     description: guide.description, dateModified: "2026-08-22", inLanguage: "sv-SE",
@@ -36,7 +38,7 @@ export default async function GuidePage({ params }: Props) {
     <main className="article-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <header className="article-hero"><div className="article-container">
-        <Link href="/guider" className="back-link"><ArrowLeft /> Alla guider</Link>
+        <Link href={inRoofCluster ? "/renovera/tak" : "/guider"} className="back-link"><ArrowLeft /> {inRoofCluster ? "Allt om tak" : "Alla guider"}</Link>
         <Link href={`/${guide.category}`} className="article-category">{guide.categoryLabel}</Link>
         <h1>{guide.title}</h1><p>{guide.description}</p>
         <div className="article-meta"><span><Clock /> {guide.readingTime} läsning</span><span><ShieldCheck /> Uppdaterad {guide.updated}</span></div>
