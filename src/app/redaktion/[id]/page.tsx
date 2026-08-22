@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Archive, ArrowLeft, Eye, Save } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-import { updateArticle } from "../actions";
+import { archiveArticle, updateArticle } from "../actions";
 import { DeleteArticleButton } from "@/components/delete-article-button";
 
 type Section = { heading?: string; paragraphs?: string[]; bullets?: string[] };
@@ -64,11 +64,13 @@ export default async function EditArticlePage({ params, searchParams }: Props) {
         <label>Status<select name="status" defaultValue={article.status}><option value="draft">Utkast</option><option value="published">Publicerad</option></select></label>
         <button className="button" type="submit"><Save /> Spara ändringar</button>
       </form>
-      <form action={deleteArticle} className="danger-zone">
-        <input type="hidden" name="id" value={article.id} /><input type="hidden" name="slug" value={article.slug} />
-        <div><strong>Radera artikel</strong><small>Åtgärden kan inte ångras.</small></div>
-        <button type="submit"><Trash2 /> Radera</button>
-      </form>
+      <div className="danger-zone">
+        <div><strong>Arkivera artikel</strong><small>Artikeln tas bort från den publika sajten men innehållet sparas.</small></div>
+        <form action={archiveArticle}>
+          <input type="hidden" name="id" value={article.id} /><input type="hidden" name="slug" value={article.slug} />
+          <button type="submit"><Archive /> Arkivera</button>
+        </form>
+      </div>
     </div>
   </main>;
 }
