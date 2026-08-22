@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Eye, Save, Trash2 } from "lucide-react";
+import { ArrowLeft, Eye, Save } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-import { deleteArticle, updateArticle } from "../actions";
+import { updateArticle } from "../actions";
+import { DeleteArticleButton } from "@/components/delete-article-button";
 
 type Section = { heading?: string; paragraphs?: string[]; bullets?: string[] };
 type Article = {
