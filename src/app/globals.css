@@ -430,3 +430,37 @@ button, input { font: inherit; }
   .article-intro { font-size: 18px; }
   .article-content h2 { font-size: 29px; }
 }
+
+
+/* Editorial workspace */
+.editor-shell { min-height: 100vh; display: grid; grid-template-columns: 230px 1fr; background: #f5f7f5; }
+.editor-sidebar { position: sticky; top: 0; height: 100vh; padding: 28px 20px; color: #d7e5e0; background: #102f29; }
+.editor-sidebar > small { display: block; margin: 0 11px 18px; color: #88a69c; font-size: 10px; font-weight: 900; letter-spacing: .14em; }
+.editor-sidebar nav { display: grid; gap: 5px; }
+.editor-sidebar nav a { display: flex; align-items: center; gap: 10px; padding: 11px 12px; border-radius: 10px; color: #bfd2cb; font-size: 13px; font-weight: 800; }
+.editor-sidebar nav a:hover { color: #fff; background: rgba(255,255,255,.08); }
+.editor-sidebar nav svg { width: 18px; }
+.editor-content { min-width: 0; }
+.editor-page { width: min(1050px, calc(100% - 64px)); margin-inline: auto; padding-block: 52px 75px; }
+.editor-page .dashboard-heading h1 { margin: 7px 0 0; font-family: Georgia, serif; font-size: 48px; font-weight: 500; }
+.editor-list { display: grid; gap: 11px; }
+.editor-list article { display: grid; grid-template-columns: 52px 1fr auto 105px; align-items: center; gap: 16px; padding: 17px; border: 1px solid var(--line); border-radius: 15px; background: #fff; }
+.editor-list .library-icon { margin: 0; }
+.editor-list small, .editor-list strong, .editor-list em { display: block; }
+.editor-list small { color: var(--green-2); font-size: 10px; font-weight: 800; }
+.editor-list strong { margin: 2px 0; }
+.editor-list em { color: #7a8c86; font-size: 11px; font-style: normal; }
+.editor-list form button { width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--green); background: #fff; font-size: 11px; font-weight: 800; cursor: pointer; }
+.editor-list .status-pill.draft { color: #765a20; background: #faedcc; }
+.editor-form-page { max-width: 900px; }
+.property-form label small { color: #71827c; font-weight: 500; }
+
+@media (max-width: 760px) {
+  .editor-shell { grid-template-columns: 1fr; }
+  .editor-sidebar { position: static; height: auto; }
+  .editor-sidebar nav { display: flex; overflow-x: auto; }
+  .editor-sidebar nav a { min-width: max-content; }
+  .editor-page { width: min(100% - 28px, 1050px); padding-block: 35px 55px; }
+  .editor-list article { grid-template-columns: 46px 1fr; }
+  .editor-list .status-pill, .editor-list form { grid-column: 2; }
+}
