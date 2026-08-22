@@ -464,3 +464,31 @@ button, input { font: inherit; }
   .editor-list article { grid-template-columns: 46px 1fr; }
   .editor-list .status-pill, .editor-list form { grid-column: 2; }
 }
+
+
+/* Editorial tools v2 — edit, preview and publishing */
+.editor-form-tools { display: flex; align-items: center; justify-content: space-between; }
+.preview-link { display: inline-flex; align-items: center; gap: 7px; margin-bottom: 24px; color: var(--green-2); font-size: 13px; font-weight: 800; }
+.preview-link svg { width: 17px; }
+.editor-section-fields { display: grid; gap: 14px; margin: 8px 0; padding: 22px; border: 1px solid var(--line); border-radius: 15px; background: var(--mint-light); }
+.editor-section-fields legend { padding: 0 8px; color: var(--green); font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; }
+.editor-row-actions { display: flex; align-items: center; justify-content: flex-end; gap: 7px; }
+.editor-row-actions > a, .editor-row-actions button { min-height: 34px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 0 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--green); background: #fff; font-size: 11px; font-weight: 800; cursor: pointer; }
+.editor-row-actions svg { width: 14px; }
+.danger-zone { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 34px; padding-top: 24px; border-top: 1px solid #ead7d4; }
+.danger-zone strong, .danger-zone small { display: block; }
+.danger-zone small { color: #8b6b66; }
+.danger-zone button { display: inline-flex; align-items: center; gap: 7px; padding: 9px 14px; border: 1px solid #d8aaa5; border-radius: 999px; color: #8b342f; background: #fff; font-weight: 800; cursor: pointer; }
+.danger-zone svg { width: 16px; }
+.preview-banner { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 20px; color: #6d5723; background: #fff4cf; font-size: 12px; font-weight: 800; }
+.preview-banner > svg { width: 17px; }
+.preview-banner a { display: inline-flex; align-items: center; gap: 5px; margin-left: 12px; color: var(--green); text-decoration: underline; }
+.preview-banner a svg { width: 15px; }
+.editor-preview .article-layout { min-height: 420px; }
+
+@media (max-width: 760px) {
+  .editor-list article { grid-template-columns: 46px 1fr; }
+  .editor-row-actions { grid-column: 1 / 3; justify-content: flex-start; }
+  .danger-zone { align-items: flex-start; flex-direction: column; }
+  .preview-banner { align-items: flex-start; flex-wrap: wrap; }
+}
