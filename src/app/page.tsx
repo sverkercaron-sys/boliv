@@ -45,8 +45,8 @@ export default function HomePage() {
           </div>
           <div className="hero-photo">
             <Image
-              src="/images/boliv-hero-home.webp"
-              alt="Ett välskött svenskt hus med en grön och ombonad trädgård"
+              src="/images/boliv-hero-blue-hour.webp"
+              alt="Ett varmt och välkomnande svenskt hem i blå timmen"
               fill
               priority
               sizes="(max-width: 900px) 100vw, 46vw"
