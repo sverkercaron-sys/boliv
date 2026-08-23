@@ -97,3 +97,22 @@ export async function updatePlacementStatus(formData: FormData) {
   if (error) redirect(`/redaktion/partners?error=${encodeURIComponent(error.message)}`);
   revalidatePath("/redaktion/partners");
 }
+
+
+export async function releasePartnerMarket(formData: FormData) {
+  const itemId = String(formData.get("itemId") ?? "");
+  const reason = String(formData.get("reason") ?? "Manuellt frisläppt i admin").trim();
+  if (!itemId) return;
+  const supabase = await editorClient();
+  const { data: item } = await supabase.from("partner_contract_items").select("id,placement_id,contract_id").eq("id", itemId).single();
+  if (!item) return;
+  const { error } = await supabase.from("partner_contract_items").update({
+    status: "released", released_at: new Date().toISOString(), release_reason: reason,
+  }).eq("id", item.id);
+  if (error) redirect(`/redaktion/partners?error=${encodeURIComponent(error.message)}`);
+  await supabase.from("partner_placements").update({
+    status: "ended", reserved_until: null, internal_notes: reason, updated_at: new Date().toISOString(),
+  }).eq("id", item.placement_id);
+  revalidatePath("/redaktion/partners");
+  redirect("/redaktion/partners?success=Partnerplatsen+är+frisläppt");
+}
