@@ -52,7 +52,7 @@ export default async function LocalRooferPage({ params }: Props) {
     </div>
     <aside className="partner-slot">
       {partner ? <><span className="partner-label">Utvald BoLiv Partner</span><BadgeCheck /><h2>{partner.name}</h2><p>{partner.description ?? `Takläggare för projekt i ${municipality.name}.`}</p>{partner.phone && <a href={`tel:${partner.phone}`}>{partner.phone}</a>}{partner.website_url && <a className="button" href={placementId ? `/partner-klick/${placementId}` : partner.website_url} rel="sponsored noopener" target="_blank">Besök företaget <ArrowRight /></a>}<small>Kommersiell partnerplats. BoLivs redaktionella guider är oberoende.</small></>
-      : <><span className="partner-label available">Partnerplats ledig</span><ShieldCheck /><h2>Är ni takläggare i {municipality.name}?</h2><p>BoLiv väljer en exklusiv partner för den här tjänsten och kommunen.</p><Link className="button" href={`/partner/ansok?kommun=${municipality.slug}`}>Anmäl intresse <ArrowRight /></Link><small>En aktiv partnerplats per tjänst och kommun.</small></>}
+      : <><span className="partner-label available">Partnerplats ledig</span><ShieldCheck /><h2>Är ni takläggare i {municipality.name}?</h2><p>Välj den exklusiva partnerplatsen och aktivera den direkt.</p><Link className="button" href={`/partner/ansok?kommun=${municipality.slug}`}>Teckna partnerplatsen <ArrowRight /></Link><small>En aktiv partnerplats per tjänst och kommun.</small></>}
     </aside></section>
     <section className="local-faq"><div className="container"><span className="kicker">Vanliga frågor</span><h2>Takbyte i {municipality.name}</h2>{faq.map((item) => <details key={item.q}><summary>{item.q}</summary><p>{item.a}</p></details>)}</div></section>
   </main>;
