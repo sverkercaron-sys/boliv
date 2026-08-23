@@ -667,3 +667,29 @@ button, input { font: inherit; }
   .partner-placement-table article { grid-template-columns: 1fr; }
   .partner-admin-section { padding: 16px; }
 }
+
+/* Automated partner checkout */
+.partner-checkout-wrap { max-width: 860px; }
+.checkout-price-card { display: grid; justify-items: start; margin-bottom: 18px; padding: 24px 28px; border-radius: 18px; color: #fff; background: var(--green); }
+.checkout-price-card strong { margin-top: 12px; font-family: Georgia, serif; font-size: 42px; font-weight: 500; }
+.checkout-price-card small { color: #c9ded6; font-weight: 800; }
+.checkout-price-card p { margin: 12px 0 0; color: #dcebe5; font-size: 13px; }
+.partner-checkout-wrap .property-form h2 { margin: 14px 0 0; padding-top: 18px; border-top: 1px solid var(--line); font-family: Georgia, serif; font-size: 25px; font-weight: 500; }
+.contract-summary { display: grid; grid-template-columns: 40px 1fr; align-items: center; gap: 13px; padding: 17px; border-radius: 13px; background: var(--mint-light); }
+.contract-summary svg { color: var(--green-2); }
+.contract-summary strong, .contract-summary span { display: block; }
+.contract-summary span { margin-top: 3px; color: var(--ink-soft); font-size: 12px; }
+.checkbox-label a { color: var(--green-2); text-decoration: underline; }
+.checkout-button { width: 100%; justify-content: center; }
+.checkout-button:disabled { cursor: not-allowed; opacity: .48; }
+.checkout-security { text-align: center; color: var(--ink-soft); }
+.checkout-complete { text-align: center; }
+.checkout-complete > svg { width: 58px; height: 58px; margin-inline: auto; color: var(--green-2); }
+.contract-reference { display: flex; align-items: center; gap: 12px; margin: 22px 0; padding: 16px; border-radius: 13px; text-align: left; background: var(--mint-light); }
+.contract-reference small, .contract-reference strong { display: block; }
+.contract-reference strong { overflow-wrap: anywhere; }
+.legal-page { max-width: 850px; }
+.legal-page > h1 { font-family: Georgia, serif; font-size: clamp(38px, 5vw, 58px); font-weight: 500; }
+.legal-page section { padding: 18px 0; border-bottom: 1px solid var(--line); }
+.legal-page section h2 { margin: 0 0 7px; }
+.legal-page section p { margin: 0; color: var(--ink-soft); }
