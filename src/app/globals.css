@@ -49,7 +49,8 @@ button, input { font: inherit; }
 .popular-searches { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; color: #637670; font-size: 13px; }
 .popular-searches a { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
 
-.hero-card { transform: rotate(1.5deg); overflow: hidden; border: 10px solid #fff; border-radius: 30px; background: #fff; box-shadow: var(--shadow); }
+.hero-photo { position: relative; min-height: 440px; overflow: hidden; isolation: isolate; }
+.hero-photo img { object-fit: cover; object-position: 52% center; filter: saturate(.88) contrast(.96); mask-image: radial-gradient(ellipse 76% 72% at 50% 50%, #000 52%, rgba(0,0,0,.88) 66%, transparent 100%); -webkit-mask-image: radial-gradient(ellipse 76% 72% at 50% 50%, #000 52%, rgba(0,0,0,.88) 66%, transparent 100%); }
 .house-visual { position: relative; height: 355px; overflow: hidden; background: linear-gradient(#c9ded5, #edf3ec 72%); }
 .sun { position: absolute; top: 40px; right: 55px; width: 64px; height: 64px; border-radius: 50%; background: #f4cc69; box-shadow: 0 0 0 18px rgba(244,204,105,.15); }
 .house { position: absolute; left: 16%; right: 13%; bottom: 36px; }
@@ -146,7 +147,7 @@ button, input { font: inherit; }
   .desktop-nav { display: none; }
   .hero-grid, .mitt-grid { grid-template-columns: 1fr; }
   .hero-grid { gap: 45px; }
-  .hero-card { max-width: 650px; }
+  .hero-photo { width: 100%; max-width: 720px; min-height: 420px; }
   .category-grid { grid-template-columns: repeat(2, 1fr); }
   .guide-grid { grid-template-columns: 1fr 1fr; }
   .mitt-grid { gap: 55px; }
@@ -156,6 +157,7 @@ button, input { font: inherit; }
   .header-inner { height: 66px; }
   .text-link { display: none; }
   .hero-grid { min-height: auto; padding-block: 48px; }
+  .hero-photo { min-height: 320px; }
   .hero h1 { font-size: 44px; letter-spacing: -1.8px; }
   .hero-lead { font-size: 17px; }
   .search-box { grid-template-columns: 21px 1fr; }
