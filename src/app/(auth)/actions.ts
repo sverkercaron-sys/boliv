@@ -33,6 +33,23 @@ export async function login(formData: FormData) {
   redirect(next);
 }
 
+export async function sendPartnerActivationLink(formData: FormData) {
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  if (!email || !email.includes("@")) {
+    redirect(`/logga-in?next=/partnerkonto&error=${encodeURIComponent("Ange e-postadressen från partneravtalet.")}`);
+  }
+  const supabase = await createClient();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://boliv-olive.vercel.app";
+  const { error } = await supabase.auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo: `${siteUrl}/auth/callback?next=/partnerkonto/aktivera`, shouldCreateUser: false },
+  });
+  if (error) {
+    redirect(`/logga-in?next=/partnerkonto&error=${encodeURIComponent("Aktiveringslänken kunde inte skickas. Kontrollera e-postadressen.")}`);
+  }
+  redirect("/logga-in?next=/partnerkonto&success=En+ny+aktiveringslänk+har+skickats+till+din+e-post");
+}
+
 export async function signup(formData: FormData) {
   if (!isSupabaseConfigured()) {
     redirect(withMessage("/skapa-konto", "error", "Supabase är ännu inte anslutet."));

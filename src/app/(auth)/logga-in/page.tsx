@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, LockKeyhole } from "lucide-react";
-import { login } from "../actions";
+import { login, sendPartnerActivationLink } from "../actions";
 
 type SearchParams = Promise<{ error?: string; success?: string; next?: string }>;
 
@@ -26,6 +26,13 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
           <label>Lösenord<input type="password" name="password" autoComplete="current-password" required /></label>
           <button className="button" type="submit">Logga in <ArrowRight /></button>
         </form>
+        {message.next === "/partnerkonto" && <>
+          <p className="auth-switch">Har du inget lösenord ännu?</p>
+          <form action={sendPartnerActivationLink} className="auth-form">
+            <label>E-postadressen från avtalet<input type="email" name="email" autoComplete="email" required /></label>
+            <button className="button" type="submit">Skicka ny aktiveringslänk</button>
+          </form>
+        </>}
         <p className="auth-switch">Inget konto ännu? <Link href="/skapa-konto">Skapa Mitt BoLiv gratis</Link></p>
       </div>
     </main>
