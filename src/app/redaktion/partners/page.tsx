@@ -24,6 +24,7 @@ export default async function PartnerAdminPage({ searchParams }: Props) {
     supabase.from("service_categories").select("id,name").order("name"),
     supabase.from("partner_placements").select("id,status,monthly_price,starts_at,ends_at,municipalities(name,slug),service_categories(name),partner_organizations(name)").order("created_at",{ascending:false}),
     supabase.from("partner_events").select("placement_id"),
+    supabase.from("partner_contract_items").select("id,status,release_reason,partner_contracts(company_name,fortnox_invoice_number,status),partner_placements(municipalities(name),service_categories(name))").order("created_at",{ascending:false}),
   ]);
   const leads=(leadResult.data??[]) as unknown as Lead[];
   const organizations=(organizationResult.data??[]) as Organization[];
