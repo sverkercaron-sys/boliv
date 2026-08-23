@@ -7,6 +7,9 @@ import { getAllPublishedGuides, getPublishedGuide } from "@/lib/content";
 import { roofGuideSet } from "@/data/roof";
 import { bathroomGuideSet } from "@/data/bathroom";
 import { plumbingGuideSet } from "@/data/plumbing";
+import { housingClusters, housingGuideSets, type HousingCluster } from "@/data/housing";
+import { getLifestyleCluster, lifestyleGuideSet } from "@/data/lifestyle";
+import { technicalClusters, technicalGuideSet } from "@/data/technical";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -31,7 +34,13 @@ export default async function GuidePage({ params }: Props) {
   const inRoofCluster = roofGuideSet.has(guide.slug);
   const inBathroomCluster = bathroomGuideSet.has(guide.slug);
   const inPlumbingCluster = plumbingGuideSet.has(guide.slug);
-  const clusterSet = inRoofCluster ? roofGuideSet : inBathroomCluster ? bathroomGuideSet : inPlumbingCluster ? plumbingGuideSet : null;
+  const housingCluster = (Object.keys(housingGuideSets) as HousingCluster[]).find((key) => housingGuideSets[key].has(guide.slug));
+  const housingConfig = housingCluster ? housingClusters[housingCluster] : null;
+  const lifestyleCluster = getLifestyleCluster(guide.slug);
+  const inLifestyleCluster = lifestyleGuideSet.has(guide.slug);
+  const technicalCluster = technicalGuideSet.has(guide.slug) ? technicalClusters.find((cluster) => cluster.slugs.some((slug) => slug === guide.slug)) : undefined;
+  const technicalSet = technicalCluster ? new Set<string>(technicalCluster.slugs) : null;
+  const clusterSet = inRoofCluster ? roofGuideSet : inBathroomCluster ? bathroomGuideSet : inPlumbingCluster ? plumbingGuideSet : housingCluster ? housingGuideSets[housingCluster] : inLifestyleCluster && lifestyleCluster ? new Set(lifestyleCluster.slugs) : technicalSet;
   const related = allGuides.filter((item) => (clusterSet ? clusterSet.has(item.slug) : item.category === guide.category) && item.slug !== guide.slug).slice(0, 3);
   const jsonLd = {
     "@context": "https://schema.org", "@type": "Article", headline: guide.title,
@@ -43,7 +52,7 @@ export default async function GuidePage({ params }: Props) {
     <main className="article-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <header className="article-hero"><div className="article-container">
-        <Link href={inRoofCluster ? "/renovera/tak" : inBathroomCluster ? "/renovera/badrum" : inPlumbingCluster ? "/underhalla/vvs" : "/guider"} className="back-link"><ArrowLeft /> {inRoofCluster ? "Allt om tak" : inBathroomCluster ? "Allt om badrum" : inPlumbingCluster ? "Allt om VVS och vatten" : "Alla guider"}</Link>
+        <Link href={inRoofCluster ? "/renovera/tak" : inBathroomCluster ? "/renovera/badrum" : inPlumbingCluster ? "/underhalla/vvs" : housingConfig?.path ?? lifestyleCluster?.href ?? (technicalCluster ? `/${technicalCluster.section}/${technicalCluster.slug}` : "/guider")} className="back-link"><ArrowLeft /> {inRoofCluster ? "Allt om tak" : inBathroomCluster ? "Allt om badrum" : inPlumbingCluster ? "Allt om VVS och vatten" : housingConfig ? `Allt om ${housingConfig.title.toLowerCase()}` : lifestyleCluster ? lifestyleCluster.title : technicalCluster ? `Allt om ${technicalCluster.label.toLowerCase()}` : "Alla guider"}</Link>
         <Link href={`/${guide.category}`} className="article-category">{guide.categoryLabel}</Link>
         <h1>{guide.title}</h1><p>{guide.description}</p>
         <div className="article-meta"><span><Clock /> {guide.readingTime} läsning</span><span><ShieldCheck /> Uppdaterad {guide.updated}</span></div>

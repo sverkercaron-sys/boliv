@@ -1,3 +1,6 @@
+import { housingGuides } from "@/data/housing";
+import { technicalGuides } from "@/data/technical";
+
 export type GuideSection = {
   heading: string;
   paragraphs: string[];
@@ -17,6 +20,8 @@ export type Guide = {
   sources?: { label: string; url: string }[];
 };
 
+import { lifestyleGuides } from "@/data/lifestyle";
+
 export const categoryLabels: Record<string, string> = {
   bygga: "Bygga",
   renovera: "Renovera",
@@ -24,9 +29,16 @@ export const categoryLabels: Record<string, string> = {
   "kopa-bostad": "Köpa & sälja",
   ekonomi: "Ekonomi",
   energi: "Energi",
+  installationer: "El, VVS & teknik",
+  tradgard: "Trädgård",
+  fritidshus: "Fritidshus",
+  juridik: "Juridik & trygghet",
 };
 
 export const guides: Guide[] = [
+  ...housingGuides,
+  ...lifestyleGuides,
+  ...technicalGuides,
   {
     slug: "byta-tak",
     category: "renovera",
