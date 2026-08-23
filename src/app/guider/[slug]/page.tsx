@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, Clock, ShieldCheck } from "lucide-react";
 import { guides as staticGuides } from "@/data/guides";
 import { getAllPublishedGuides, getPublishedGuide } from "@/lib/content";
 import { roofGuideSet } from "@/data/roof";
+import { bathroomGuideSet } from "@/data/bathroom";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -27,7 +28,9 @@ export default async function GuidePage({ params }: Props) {
   if (!guide) notFound();
   const allGuides = await getAllPublishedGuides();
   const inRoofCluster = roofGuideSet.has(guide.slug);
-  const related = allGuides.filter((item) => (inRoofCluster ? roofGuideSet.has(item.slug) : item.category === guide.category) && item.slug !== guide.slug).slice(0, 2);
+  const inBathroomCluster = bathroomGuideSet.has(guide.slug);
+  const clusterSet = inRoofCluster ? roofGuideSet : inBathroomCluster ? bathroomGuideSet : null;
+  const related = allGuides.filter((item) => (clusterSet ? clusterSet.has(item.slug) : item.category === guide.category) && item.slug !== guide.slug).slice(0, 3);
   const jsonLd = {
     "@context": "https://schema.org", "@type": "Article", headline: guide.title,
     description: guide.description, dateModified: "2026-08-22", inLanguage: "sv-SE",
@@ -38,7 +41,7 @@ export default async function GuidePage({ params }: Props) {
     <main className="article-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <header className="article-hero"><div className="article-container">
-        <Link href={inRoofCluster ? "/renovera/tak" : "/guider"} className="back-link"><ArrowLeft /> {inRoofCluster ? "Allt om tak" : "Alla guider"}</Link>
+        <Link href={inRoofCluster ? "/renovera/tak" : inBathroomCluster ? "/renovera/badrum" : "/guider"} className="back-link"><ArrowLeft /> {inRoofCluster ? "Allt om tak" : inBathroomCluster ? "Allt om badrum" : "Alla guider"}</Link>
         <Link href={`/${guide.category}`} className="article-category">{guide.categoryLabel}</Link>
         <h1>{guide.title}</h1><p>{guide.description}</p>
         <div className="article-meta"><span><Clock /> {guide.readingTime} läsning</span><span><ShieldCheck /> Uppdaterad {guide.updated}</span></div>
@@ -51,6 +54,7 @@ export default async function GuidePage({ params }: Props) {
             {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             {section.bullets && <ul>{section.bullets.map((item) => <li key={item}>{item}</li>)}</ul>}
           </section>)}
+          {guide.sources && guide.sources.length > 0 && <section className="article-sources"><h2>Källor och vidare läsning</h2><ul>{guide.sources.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label}</a></li>)}</ul></section>}
           <aside className="article-cta"><span className="kicker">Mitt BoLiv</span><h2>Spara projekt, kostnader och dokument.</h2><p>Samla bostadens historik i en privat digital pärm.</p><Link className="button" href="/skapa-konto">Skapa gratis konto <ArrowRight /></Link></aside>
         </article>
         <aside className="article-sidebar"><strong>I den här guiden</strong>{guide.sections.map((section) => <span key={section.heading}>{section.heading}</span>)}<small>BoLivs guider ger generell information. Kontrollera alltid myndighetskrav och anlita behörig expert när det behövs.</small></aside>

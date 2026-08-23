@@ -14,6 +14,7 @@ export type Guide = {
   updated: string;
   intro: string;
   sections: GuideSection[];
+  sources?: { label: string; url: string }[];
 };
 
 export const categoryLabels: Record<string, string> = {
@@ -59,7 +60,7 @@ export const guides: Guide[] = [
     title: "Vad kostar det att renovera ett badrum?",
     description: "Så gör du en realistisk badrumsbudget och jämför offerter utan att missa de kostsamma detaljerna.",
     readingTime: "10 min",
-    updated: "22 augusti 2026",
+    updated: "23 augusti 2026",
     intro: "Badrumsrenoveringar skiljer sig mycket i pris. Storlek, material, rördragning och underlagets skick påverkar mer än många räknar med.",
     sections: [
       {
@@ -75,6 +76,130 @@ export const guides: Guide[] = [
         heading: "Bygg en trygg budget",
         paragraphs: ["Dela upp budgeten i arbete, material och reserv. En reserv på 10–15 procent ger bättre marginal för fel som upptäcks efter rivningen.", "Bestäm vem som ansvarar för material, samordning och förseningar innan avtalet skrivs."],
       },
+    ],
+    sources: [
+      { label: "Skatteverket – så fungerar rotavdraget", url: "https://www.skatteverket.se/privat/fastigheterochbostad/rotarbeteochrutarbete/safungerarrotavdraget.4.5947400c11f47f7f9dd80004014.html" },
+      { label: "Säker Vatten – branschregler 2026:1", url: "https://sakervatten.se/branschregler/branschregler-saker-vatteninstallation-20261/" },
+    ],
+  },
+  {
+    slug: "renovera-badrum",
+    category: "renovera", categoryLabel: "Renovera",
+    title: "Renovera badrum – komplett guide från idé till slutkontroll",
+    description: "Planera badrumsrenoveringen steg för steg: krav, budget, entreprenörer, tätskikt, VVS, el och dokumentation.",
+    readingTime: "15 min", updated: "23 augusti 2026",
+    intro: "Ett bra badrum börjar långt före rivningen. När planlösning, ansvar, tekniska lösningar och kontroller är bestämda i förväg minskar risken för både förseningar och kostsamma vattenskador.",
+    sections: [
+      { heading: "1. Börja med behov och förutsättningar", paragraphs: ["Mät rummet och dokumentera befintliga installationer. Bestäm vilka funktioner som verkligen behövs och om toalett, golvbrunn och tappvatten kan ligga kvar. Flytt av avlopp och vatten påverkar ofta både pris och risk.", "I en bostadsrätt ska du tidigt kontrollera föreningens stadgar och rutiner. Ledningar, bjälklag och ventilation kan tillhöra föreningen även när ytskikten är ditt ansvar."], bullets: ["Planritning med mått och dörrslagning", "Placering av dusch, wc, kommod och förvaring", "Ventilation och möjlighet till service", "Tillgänglighet nu och på längre sikt"] },
+      { heading: "2. Projektera innan du beställer", paragraphs: ["Välj ett sammanhängande system för golvbrunn och tätskikt och säkerställ att produkter och montage fungerar tillsammans. Tekniska beslut ska finnas i offert och avtal – inte tas löpande på byggplatsen.", "Badrummet ska uppfylla myndighetskrav. Branschregler från exempelvis Säker Vatten, BKR eller GVK används för att beskriva fackmässigt utförande och kan vara viktiga för försäkringen."], bullets: ["Fall mot golvbrunn", "Rörgenomföringar och serviceåtkomst", "Våtzoner och tätskiktssystem", "Elområden, belysning och golvvärme"] },
+      { heading: "3. Skriv ett tydligt avtal", paragraphs: ["Ange omfattning, material, ansvar, start och sluttid, prisform och hur ändringar ska godkännas. Betalningsplanen bör följa kontrollerbara delmoment.", "Kontrollera företag, behörigheter, försäkring och referenser. Elinstallationsföretaget ska vara registrerat för rätt verksamhetstyp."], bullets: ["Vem samordnar alla yrkesgrupper?", "Vem köper och ansvarar för material?", "Vad ingår i återställning och städning?", "Vilka dokument ska lämnas vid slutbetalning?"] },
+      { heading: "4. Följ kritiska moment", paragraphs: ["Dokumentera underlag, rördragningar, golvbrunn, tätskikt och el innan de byggs in. Fotona ersätter inte kvalitetsdokument men gör framtida service och skadeutredning enklare.", "Stoppa och utred avvikelser direkt. Ett felaktigt fall eller en olämplig genomföring blir betydligt dyrare att rätta efter plattsättning."], bullets: ["Kontroll efter rivning", "Kontroll före tätskikt", "Kontroll före ytskikt", "Funktions- och slutkontroll"] },
+      { heading: "5. Ta emot badrummet ordentligt", paragraphs: ["Kontrollera funktion, finish, fall, avrinning, ventilation, fogar, luckor och att avtalat material är monterat. Samla fakturor, produktblad, garantier, foton och kvalitetsdokument.", "Betala inte sista delen innan avtalad leverans och dokumentation är klar. Spara allt tillsammans med datum, företag och kostnad i bostadens historik."] },
+    ],
+    sources: [
+      { label: "Boverket – vatten- och avloppsinstallationer", url: "https://www.boverket.se/sv/PBL-kunskapsbanken/regler-om-byggande/hygien-halsa-och-miljo/vatten-avlopp/" },
+      { label: "Säker Vatten – branschregler 2026:1", url: "https://sakervatten.se/branschregler/branschregler-saker-vatteninstallation-20261/" },
+      { label: "Elsäkerhetsverket – el i bad- och duschrum", url: "https://www.elsakerhetsverket.se/privatpersoner/din-elanlaggning/bygga-och-renovera/installation-av-el-i-bad-och-duschrum/" },
+    ],
+  },
+  {
+    slug: "tatskikt-badrum", category: "renovera", categoryLabel: "Renovera",
+    title: "Tätskikt i badrum – våtzoner, underlag och kontroll",
+    description: "Förstå vad tätskiktet gör, hur systemet väljs och vilka moment som behöver dokumenteras.",
+    readingTime: "10 min", updated: "23 augusti 2026",
+    intro: "Tätskiktet är badrummets viktigaste skydd mot fukt. Ytskiktet kan se perfekt ut samtidigt som små fel bakom kakel eller matta orsakar stora följdskador.",
+    sections: [
+      { heading: "Ett system – inte lösa produkter", paragraphs: ["Tätskikt, manschetter, lim, hörn och golvbrunn måste vara avsedda att användas tillsammans. Följ systemleverantörens monteringsanvisning och den branschregel som entreprenören åtar sig att arbeta efter."] },
+      { heading: "Underlaget avgör resultatet", paragraphs: ["Underlaget ska vara stabilt, rent och anpassat till valt system. Rörelser, fel skivmaterial eller bristande fall kan inte räddas av ett dyrt ytskikt."], bullets: ["Kontrollera fall före tätskikt", "Dokumentera golvbrunnens typ och ålder", "Undvik onödiga genomföringar", "Följ torktider och temperaturkrav"] },
+      { heading: "Begär rätt dokumentation", paragraphs: ["Be om kvalitetsdokument, produktuppgifter och foton från kritiska detaljer. Dokumenten ska kunna kopplas till just ditt badrum, datum och utförande företag."] },
+    ],
+    sources: [{ label: "Säker Vatten – rörgenomföringar", url: "https://sakervatten.se/branschregler/online/3-2/" }],
+  },
+  {
+    slug: "vvs-badrum", category: "renovera", categoryLabel: "Renovera",
+    title: "VVS i badrum – rör, golvbrunn och säkra installationer",
+    description: "Det viktigaste om tappvatten, avlopp, rörgenomföringar och dokumentation vid badrumsrenovering.",
+    readingTime: "9 min", updated: "23 augusti 2026",
+    intro: "VVS-installationerna ska både fungera i vardagen och begränsa skadan om något läcker. Därför behöver rördragning och serviceåtkomst planeras tillsammans med tätskiktet.",
+    sections: [
+      { heading: "Planera för upptäckbara läckage", paragraphs: ["Dolda tappvattenledningar bör utformas utan oåtkomliga fogar. Kopplingar och komponenter som kan behöva bytas ska gå att inspektera och serva."], bullets: ["Placera fördelare åtkomligt", "Led läckage till synlig plats", "Dokumentera rörens sträckning", "Kontrollera avstängningsmöjlighet"] },
+      { heading: "Golvbrunn och genomföringar", paragraphs: ["Golvbrunnens placering och anslutning till tätskiktet är kritisk. I golv med tätskikt ska onödiga rörgenomföringar undvikas; i dusch- eller badplats är kraven särskilt stränga."] },
+      { heading: "Välj auktoriserat företag", paragraphs: ["Be företaget ange vilket regelverk arbetet utförs enligt och vilket intyg som lämnas. För arbeten som startar 2026 är Säker Vattens aktuella regelversion 2026:1, med vissa övergångsbestämmelser."] },
+    ],
+    sources: [{ label: "Säker Vatten – branschregler 2026:1", url: "https://sakervatten.se/branschregler/branschregler-saker-vatteninstallation-20261/" }],
+  },
+  {
+    slug: "el-badrum", category: "renovera", categoryLabel: "Renovera",
+    title: "El i badrum – belysning, uttag och golvvärme",
+    description: "Planera säker el i badrummet och förstå vad som måste utföras av ett registrerat elinstallationsföretag.",
+    readingTime: "8 min", updated: "23 augusti 2026",
+    intro: "Vatten och el kräver extra säkerhetsmarginal. Placering, kapslingsklass och skydd ska projekteras utifrån badrummets områdesindelning och den utrustning som ska användas.",
+    sections: [
+      { heading: "Ta elplanen tidigt", paragraphs: ["Bestäm belysning, uttag, spegel, handdukstork, golvvärme och eventuell tvättmaskin innan väggar och golv byggs. Efterhandslösningar kan bli både dyra och osäkra."], bullets: ["Allmänljus och spegelbelysning", "Uttag på rätt plats", "Jordfelsbrytare", "Styrning och termostat"] },
+      { heading: "Anlita rätt företag", paragraphs: ["Elinstallationsarbete ska utföras av ett företag som är registrerat hos Elsäkerhetsverket för rätt typ av arbete. Kontrollera företaget före beställning och avtala om dokumentation och funktionsprovning."] },
+      { heading: "Undvik tillfälliga lösningar", paragraphs: ["Dra inte in förlängningssladd från ett annat rum. Utrustning i badrummet ska anslutas till installationer som är avsedda och placerade för miljön."] },
+    ],
+    sources: [{ label: "Elsäkerhetsverket – installation av el i bad- och duschrum", url: "https://www.elsakerhetsverket.se/privatpersoner/din-elanlaggning/bygga-och-renovera/installation-av-el-i-bad-och-duschrum/" }],
+  },
+  {
+    slug: "jamfora-badrumsofferter", category: "renovera", categoryLabel: "Renovera",
+    title: "Jämföra offerter för badrum – checklista före avtal",
+    description: "Jämför samma omfattning, hitta luckorna och skriv ett avtal som minskar risken för dyra tillägg.",
+    readingTime: "9 min", updated: "23 augusti 2026",
+    intro: "Den billigaste badrumsofferten är inte alltid billigast när arbetet är klart. En bra jämförelse börjar med att alla företag räknar på samma underlag.",
+    sections: [
+      { heading: "Skicka samma förfrågan", paragraphs: ["Bifoga ritning, produktlista och tydlig beskrivning av vad som ska rivas, flyttas, levereras och dokumenteras."], bullets: ["Fast pris och tydliga reservationer", "Arbete, material och resor separerade", "Ansvar för VVS, el och tätskikt", "Start, sluttid och betalningsplan"] },
+      { heading: "Granska det som saknas", paragraphs: ["Kontrollera rivning, bortforsling, återställning, håltagning, målning, byggstädning och skydd av övriga bostaden. Be om pris eller enhetspris på sannolika tillägg."] },
+      { heading: "Avtala om ändringar", paragraphs: ["Ändringar och tillägg ska godkännas skriftligt med pris- och tidseffekt innan arbetet utförs. Koppla slutbetalningen till godkänd leverans och överlämnad dokumentation."] },
+    ],
+  },
+  {
+    slug: "badrum-bostadsratt", category: "renovera", categoryLabel: "Renovera",
+    title: "Renovera badrum i bostadsrätt – ansvar och tillstånd",
+    description: "Så förbereder du föreningens godkännande och reder ut ansvar för ledningar, ventilation och återställning.",
+    readingTime: "9 min", updated: "23 augusti 2026",
+    intro: "I en bostadsrätt äger du inte byggnaden ensam. Därför behöver badrumsprojektet följa både lag, föreningens stadgar och de tekniska krav som styrelsen beslutat om.",
+    sections: [
+      { heading: "Läs stadgar och ansök i tid", paragraphs: ["Kontakta styrelsen innan beställning. Föreningar har ofta egna blanketter och krav på ritning, entreprenörer, tider, avstängning och besiktning."], bullets: ["Ändrad planlösning", "Ingrepp i avlopp eller tappvatten", "Ventilation", "Golvbrunn och bjälklag"] },
+      { heading: "Klargör gränsen för ansvar", paragraphs: ["Vem som ansvarar för ledningar, golvbrunn, tätskikt och ytskikt framgår av lag och stadgar. Be styrelsen skriftligen bekräfta vad som gäller i just din förening."] },
+      { heading: "Planera störningar och avstängning", paragraphs: ["Informera grannar, boka eventuell vattenavstängning och följ husets arbetstider. Dokumentera projektet så att både du och föreningen kan förstå vad som byggts in."] },
+    ],
+  },
+  {
+    slug: "litet-badrum-planering", category: "renovera", categoryLabel: "Renovera",
+    title: "Planera ett litet badrum – mått, förvaring och smarta val",
+    description: "Få ett litet badrum att fungera bättre utan att kompromissa med säkerhet, service eller städbarhet.",
+    readingTime: "7 min", updated: "23 augusti 2026",
+    intro: "I ett litet badrum måste varje centimeter arbeta. Börja med rörelseytor och tekniska krav; välj sedan inredning som gör rummet lätt att använda och hålla rent.",
+    sections: [
+      { heading: "Rita användningen – inte bara möblerna", paragraphs: ["Markera dörrslagning, duschyta, plats framför wc och kommod samt åtkomst till golvbrunn och installationer. Prova vardagliga rörelser på ritningen."] },
+      { heading: "Skapa lugn och förvaring", paragraphs: ["Vägghängd eller grund inredning kan frigöra golvyta. Samla småsaker bakom spegel eller i lådor och håll öppna hyllor begränsade."], bullets: ["Skjut- eller utåtgående dörr när det passar", "Duschvägg som kan fällas", "Spegel med dold förvaring", "Sammanhållen färg- och materialskala"] },
+      { heading: "Behåll serviceåtkomsten", paragraphs: ["Bygg inte bort golvbrunn, avstängningar eller inspektionsmöjligheter. En kompakt lösning ska fortfarande kunna underhållas och repareras."] },
+    ],
+  },
+  {
+    slug: "badrumsrenovering-dokumentation", category: "renovera", categoryLabel: "Renovera",
+    title: "Dokumentation efter badrumsrenovering – det här ska du spara",
+    description: "Samla rätt intyg, foton, produktuppgifter och avtal för försäkring, service och framtida försäljning.",
+    readingTime: "7 min", updated: "23 augusti 2026",
+    intro: "När ytskikten är klara går det inte längre att se hur badrummet är byggt. Bra dokumentation gör det möjligt att följa arbetet, hitta installationer och visa vad som utförts.",
+    sections: [
+      { heading: "Dokument från entreprenörerna", paragraphs: ["Avtala före start om vilka dokument varje yrkesgrupp ska lämna. Kraven varierar mellan regelverk och företag."], bullets: ["Kvalitetsdokument för tätskikt", "Intyg från VVS-företag", "Avtalad el-dokumentation och provning", "Garantier och skötselanvisningar"] },
+      { heading: "Foton och produktregister", paragraphs: ["Fotografera rör, ledningar, förstärkningar, golvbrunn och tätskiktsdetaljer innan de täcks. Spara fabrikat, modell, kulör och artikelnummer på produkter som kan behöva kompletteras."] },
+      { heading: "Spara allt på ett ställe", paragraphs: ["Koppla handlingarna till bostaden med renoveringsdatum, kostnad och utförande företag. Det förenklar garantiärenden, försäkringsfrågor och en framtida försäljning."] },
+    ],
+    sources: [{ label: "Elsäkerhetsverket – badrumsrenovering, utförande och intyg", url: "https://www.elsakerhetsverket.se/fragor-och-svar/arkiv-fragor/Badrumsrenovering-utforande-och-intyg/" }],
+  },
+  {
+    slug: "slutkontroll-badrum", category: "renovera", categoryLabel: "Renovera",
+    title: "Slutkontroll av badrum – checklista innan slutbetalning",
+    description: "Kontrollera funktion, finish och dokumentation systematiskt innan badrummet lämnas över.",
+    readingTime: "8 min", updated: "23 augusti 2026",
+    intro: "Slutkontrollen ska fånga både synliga fel och sådant som saknas i leveransen. Gör den i dagsljus, med avtalet och produktlistan framför dig.",
+    sections: [
+      { heading: "Prova alla funktioner", paragraphs: ["Spola wc, fyll och töm handfat, prova dusch, blandare, golvvärme, belysning och ventilation. Kontrollera samtidigt läckage, avrinning och missljud."], bullets: ["Vatten rinner mot golvbrunn", "Dörrar och lådor går fria", "Fogar och anslutningar är hela", "Servicepunkter är åtkomliga"] },
+      { heading: "Stäm av mot beställningen", paragraphs: ["Kontrollera modeller, placeringar, ytskikt och alla avtalade tillägg. Fotografera avvikelser och skriv en gemensam lista med ansvar och sista åtgärdsdatum."] },
+      { heading: "Ta emot dokumentationen", paragraphs: ["Samla kvalitetsdokument, garantier, skötselanvisningar, produktblad, foton och slutfaktura. Slutbetalning bör ske först när avtalade fel är hanterade och leveransen är komplett."] },
     ],
   },
   {
