@@ -30,7 +30,8 @@ export default async function PartnerAdminPage({ searchParams }: Props) {
   const municipalities=(municipalityResult.data??[]) as Municipality[];
   const services=(serviceResult.data??[]) as Service[];
   const placements=(placementResult.data??[]) as unknown as Placement[];
-  const contractItems=(contractItemResult.data??[]) as unknown as ContractItem[];\n  const clicks=(eventResult.data??[]).reduce<Record<string,number>>((sum,event)=>{sum[event.placement_id]=(sum[event.placement_id]??0)+1;return sum;},{});
+  const contractItems=(contractItemResult.data??[]) as unknown as ContractItem[];
+  const clicks=(eventResult.data??[]).reduce<Record<string,number>>((sum,event)=>{sum[event.placement_id]=(sum[event.placement_id]??0)+1;return sum;},{});
   const activeCount=placements.filter(item=>item.status==="active").length;
   const monthlyRevenue=placements.filter(item=>item.status==="active").reduce((sum,item)=>sum+Number(item.monthly_price??0),0);
 
