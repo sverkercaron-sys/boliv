@@ -292,7 +292,7 @@ values
   ('2581', 'Piteå', 'Norrbottens län', 'pitea'),
   ('2582', 'Boden', 'Norrbottens län', 'boden'),
   ('2583', 'Haparanda', 'Norrbottens län', 'haparanda'),
-  ('2584', 'Kiruna', 'Norrbottens län', 'kiruna');
+  ('2584', 'Kiruna', 'Norrbottens län', 'kiruna')
 on conflict (code) do update set
   name = excluded.name,
   county_name = excluded.county_name,
