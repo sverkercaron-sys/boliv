@@ -137,3 +137,34 @@ $$;
 
 revoke all on function public.purchase_partner_market(text,text,text,text,text,text,text,text,text,text,text,uuid,inet) from public;
 grant execute on function public.purchase_partner_market(text,text,text,text,text,text,text,text,text,text,text,uuid,inet) to anon, authenticated;
+
+
+create or replace function public.available_partner_markets()
+returns table(
+  service_slug text,
+  service_name text,
+  municipality_slug text,
+  municipality_name text,
+  county_name text
+)
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select s.slug, s.name, m.slug, m.name, m.county_name
+  from public.service_categories s
+  cross join public.municipalities m
+  where not exists (
+    select 1 from public.partner_placements p
+    where p.service_category_id = s.id
+      and p.municipality_code = m.code
+      and (
+        p.status = 'active'
+        or (p.status = 'reserved' and coalesce(p.reserved_until, now() + interval '1 minute') > now())
+      )
+  )
+  order by s.name, m.name;
+$$;
+
+grant execute on function public.available_partner_markets() to anon, authenticated;
