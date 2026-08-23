@@ -1,34 +1,23 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowLeft, Send } from "lucide-react";
-import { createClient } from "@/lib/supabase/server";
-import { submitPartnerLead } from "../actions";
-
-export const metadata: Metadata = { title: "Ansök om att bli BoLiv Partner", description: "Anmäl företagets intresse för en exklusiv partnerplats i en kommun." };
-
-type Props = { searchParams: Promise<{ kommun?: string; success?: string; error?: string }> };
-type Municipality = { slug: string; name: string };
-
-export default async function PartnerApplyPage({ searchParams }: Props) {
-  const params = await searchParams;
-  const supabase = await createClient();
-  const { data } = await supabase.from("municipalities").select("slug,name").order("name");
-  const municipalities = (data ?? []) as Municipality[];
-
-  return <main className="partner-form-page"><div className="partner-form-wrap">
-    <Link href="/partner" className="back-link"><ArrowLeft /> BoLiv Partner</Link>
-    <div className="form-card"><span className="kicker">Intresseanmälan</span><h1>Vilken marknad vill ni äga?</h1><p>Intresseanmälan är inte bindande. Vi kontaktar er med upplägg, pris och tillgänglighet.</p>
-      {params.success && <div className="form-message success">{params.success}</div>}
-      {params.error && <div className="form-message error">{params.error}</div>}
-      {!params.success && <form action={submitPartnerLead} className="property-form">
-        <div className="form-columns"><label>Företagsnamn<input name="companyName" required /></label><label>Organisationsnummer<input name="organizationNumber" /></label></div>
-        <div className="form-columns"><label>Kontaktperson<input name="contactName" required /></label><label>E-post<input name="email" type="email" required /></label></div>
-        <div className="form-columns"><label>Telefon<input name="phone" type="tel" /></label><label>Kommun<select name="municipality" defaultValue={params.kommun ?? ""}><option value="">Välj kommun</option>{municipalities.map((item) => <option value={item.slug} key={item.slug}>{item.name}</option>)}</select></label></div>
-        <label>Berätta kort om företaget<textarea name="message" rows={5} /></label>
-        <label className="partner-honeypot" aria-hidden="true">Webbplats<input name="website" tabIndex={-1} autoComplete="off" /></label>
-        <label className="checkbox-label"><input type="checkbox" required /><span>Jag godkänner att BoLiv kontaktar mig om partnererbjudandet.</span></label>
-        <button className="button" type="submit"><Send /> Skicka intresseanmälan</button>
-      </form>}
-    </div>
-  </div></main>;
+import type{Metadata}from"next";import Link from"next/link";import{ArrowLeft,BadgeCheck,FileCheck2,LockKeyhole,MapPin}from"lucide-react";
+import{createClient}from"@/lib/supabase/server";import{purchasePartnerMarkets}from"../actions";
+export const metadata:Metadata={title:"Teckna BoLiv Partner",description:"Välj en eller flera lediga marknader och teckna partneravtalet direkt."};
+type Market={service_slug:string;service_name:string;municipality_slug:string;municipality_name:string;county_name:string};
+type Props={searchParams:Promise<{kommun?:string;error?:string}>};
+export default async function PartnerCheckoutPage({searchParams}:Props){
+ const params=await searchParams;const supabase=await createClient();const{data}=await supabase.rpc("available_partner_markets");const markets=(data??[])as Market[];
+ const grouped=markets.reduce<Record<string,Market[]>>((sum,item)=>{(sum[item.service_name]??=[]).push(item);return sum;},{});
+ const ready=Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY);const idempotencyKey=crypto.randomUUID();
+ return <main className="partner-form-page"><div className="partner-form-wrap partner-checkout-wrap"><Link href="/partner" className="back-link"><ArrowLeft/>BoLiv Partner</Link>
+ <div className="checkout-price-card"><span className="partner-label available">Introduktionserbjudande</span><strong>2 990 kr</strong><small>exkl. moms · per vald bransch och kommun · första året</small><p>Därefter 4 990 kr per plats och år. Alla val samlas på ett avtal och en årsvis förskottsfaktura.</p></div>
+ <div className="form-card"><span className="kicker">Teckna direkt</span><h1>Bygg er lokala närvaro.</h1><p>Välj en eller flera lediga marknader. Platserna reserveras direkt när avtalet ingås och företagssidan öppnas när fakturan har skapats.</p>
+ {params.error&&<div className="form-message error">{params.error}</div>}{!ready&&<div className="form-message error">Kassan öppnar så snart den säkra serveranslutningen är konfigurerad.</div>}
+ {markets.length===0?<div className="panel-empty"><BadgeCheck/><h3>Inga lediga marknader just nu</h3></div>:<form action={purchasePartnerMarkets} className="property-form"><input type="hidden" name="idempotencyKey" value={idempotencyKey}/>
+ <h2>Välj marknader</h2><div className="market-picker">{Object.entries(grouped).map(([service,items])=><fieldset key={service}><legend>{service}</legend>{items.map(item=><label className="market-option" key={`${item.service_slug}:${item.municipality_slug}`}><input type="checkbox" name="markets" value={`${item.service_slug}:${item.municipality_slug}`} defaultChecked={params.kommun===item.municipality_slug}/><MapPin/><span><strong>{item.municipality_name}</strong><small>{item.county_name} · 2 990 kr år 1</small></span></label>)}</fieldset>)}</div>
+ <h2>Företagsuppgifter</h2><div className="form-columns"><label>Företagsnamn<input name="companyName" required/></label><label>Organisationsnummer<input name="organizationNumber" required/></label></div>
+ <div className="form-columns"><label>Kontaktperson<input name="contactName" required/></label><label>E-post för avtal och faktura<input name="email" type="email" required/></label></div><label>Telefon<input name="phone" type="tel"/></label>
+ <h2>Fakturaadress</h2><label>Adress<input name="billingAddress" required/></label><div className="form-columns"><label>Postnummer<input name="billingPostalCode" required/></label><label>Ort<input name="billingCity" required/></label></div>
+ <div className="contract-summary"><FileCheck2/><div><strong>Ett årsavtal och en samlad faktura</strong><span>2 990 kr exkl. moms per vald plats första året. Därefter 4 990 kr per plats och år.</span></div></div>
+ <label className="checkbox-label"><input type="checkbox" name="termsAccepted" value="yes" required/><span>Jag är behörig att företräda företaget och godkänner <Link href="/partner/villkor" target="_blank">avtalsvillkoren</Link>.</span></label>
+ <button className="button checkout-button" type="submit" disabled={!ready}><LockKeyhole/>Teckna avtal och skapa faktura</button><small className="checkout-security">Tillgängligheten kontrolleras på nytt när avtalet skickas in.</small></form>}
+ </div></div></main>;
 }
