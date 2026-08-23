@@ -8,7 +8,8 @@ type Organization = { id:string; name:string; email:string|null; phone:string|nu
 type Municipality = { code:string; name:string };
 type Service = { id:string; name:string };
 type Placement = { id:string; status:string; monthly_price:number|null; starts_at:string|null; ends_at:string|null; municipalities:{name:string;slug:string}|null; service_categories:{name:string}|null; partner_organizations:{name:string}|null };
-type ContractItem = { id:string; status:string; release_reason:string|null; partner_contracts:{company_name:string;fortnox_invoice_number:string|null;status:string}|null; partner_placements:{municipalities:{name:string}|null;service_categories:{name:string}|null}|null };\ntype Props = { searchParams: Promise<{ success?:string; error?:string }> };
+type ContractItem = { id:string; status:string; release_reason:string|null; partner_contracts:{company_name:string;fortnox_invoice_number:string|null;status:string}|null; partner_placements:{municipalities:{name:string}|null;service_categories:{name:string}|null}|null };
+type Props = { searchParams: Promise<{ success?:string; error?:string }> };
 
 const leadLabels:Record<string,string>={new:"Ny",contacted:"Kontaktad",qualified:"Kvalificerad",won:"Vunnen",closed:"Avslutad"};
 const placementLabels:Record<string,string>={available:"Ledig",reserved:"Reserverad",active:"Aktiv",paused:"Pausad",ended:"Avslutad"};
