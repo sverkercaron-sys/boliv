@@ -16,6 +16,8 @@ export async function login(formData: FormData) {
 
   const email = String(formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "");
+  const requestedNext = String(formData.get("next") ?? "");
+  const next = requestedNext.startsWith("/") && !requestedNext.startsWith("//") ? requestedNext : "/mitt-boliv";
 
   if (!email || !password) {
     redirect(withMessage("/logga-in", "error", "Fyll i e-post och lösenord."));
@@ -28,7 +30,7 @@ export async function login(formData: FormData) {
     redirect(withMessage("/logga-in", "error", "Inloggningen misslyckades. Kontrollera uppgifterna."));
   }
 
-  redirect("/mitt-boliv");
+  redirect(next);
 }
 
 export async function signup(formData: FormData) {
