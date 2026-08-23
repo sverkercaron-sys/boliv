@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowRight,
   CalendarCheck,
@@ -42,21 +43,14 @@ export default function HomePage() {
               <Link href="/guider/renovera-badrum-kostnad">Badrum</Link>
             </div>
           </div>
-          <div className="hero-card">
-            <div className="house-visual">
-              <div className="sun" />
-              <div className="house">
-                <div className="roof" />
-                <div className="wall">
-                  <div className="window" />
-                  <div className="door" />
-                </div>
-              </div>
-              <div className="ground" />
-            </div>
-            <div className="hero-card-content">
-              <span className="status-dot" /> Din bostad, samlad och under kontroll
-            </div>
+          <div className="hero-photo">
+            <Image
+              src="/images/boliv-hero-home.webp"
+              alt="Ett välskött svenskt hus med en grön och ombonad trädgård"
+              fill
+              priority
+              sizes="(max-width: 900px) 100vw, 46vw"
+            />
           </div>
         </div>
       </section>
