@@ -8,9 +8,9 @@ type Props = { searchParams: Promise<{ avtal?: string }> };
 export default async function PartnerCompletePage({ searchParams }: Props) {
   const { avtal } = await searchParams;
   return <main className="partner-form-page"><div className="partner-form-wrap"><div className="form-card checkout-complete">
-    <BadgeCheck /><span className="kicker">Klart</span><h1>Era partnerplatser är sålda och reserverade.</h1>
-    <p>Avtalet är registrerat och en samlad faktura har skickats via Fortnox. Företagsnamnet visas nu på de valda marknaderna. Företagssidan publiceras automatiskt när betalningen registreras.</p>
+    <BadgeCheck /><span className="kicker">Klart</span><h1>Era partnerplatser är reserverade.</h1>
+    <p>Avtalet är registrerat och fakturaunderlaget är skapat. Företagsnamnet visas nu på de valda marknaderna. Ni får åtkomst till ert backoffice via e-postadressen som angavs i avtalet.</p>
     {avtal && <div className="contract-reference"><FileText /><span><small>Avtalsreferens</small><strong>{avtal}</strong></span></div>}
-    <Link className="button" href="/partnerkonto">Öppna ert backoffice</Link>
+    <Link className="button" href="/logga-in?next=/partnerkonto">Ta mig till partnersidan</Link>
   </div></div></main>;
 }
