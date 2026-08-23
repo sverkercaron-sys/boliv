@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { Building2, ExternalLink, Mail, MapPin, MousePointerClick, Phone, Plus, Store } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-import { createPartnerOrganization, createPartnerPlacement, updateLeadStatus, updatePlacementStatus } from "./actions";
+import { createPartnerOrganization, createPartnerPlacement, releasePartnerMarket, updateLeadStatus, updatePlacementStatus } from "./actions";
 
 type Lead = { id:string; company_name:string; contact_name:string; email:string; phone:string|null; message:string|null; status:string; created_at:string; municipalities:{name:string}|null; service_categories:{name:string}|null };
 type Organization = { id:string; name:string; email:string|null; phone:string|null; website_url:string|null; status:string };
 type Municipality = { code:string; name:string };
 type Service = { id:string; name:string };
 type Placement = { id:string; status:string; monthly_price:number|null; starts_at:string|null; ends_at:string|null; municipalities:{name:string;slug:string}|null; service_categories:{name:string}|null; partner_organizations:{name:string}|null };
+type ContractItem = { id:string; status:string; release_reason:string|null; partner_contracts:{company_name:string;fortnox_invoice_number:string|null;status:string}|null; partner_placements:{municipalities:{name:string}|null;service_categories:{name:string}|null}|null };
 type Props = { searchParams: Promise<{ success?:string; error?:string }> };
 
 const leadLabels:Record<string,string>={new:"Ny",contacted:"Kontaktad",qualified:"Kvalificerad",won:"Vunnen",closed:"Avslutad"};
@@ -16,19 +17,21 @@ const placementLabels:Record<string,string>={available:"Ledig",reserved:"Reserve
 export default async function PartnerAdminPage({ searchParams }: Props) {
   const params=await searchParams;
   const supabase=await createClient();
-  const [leadResult,organizationResult,municipalityResult,serviceResult,placementResult,eventResult]=await Promise.all([
+  const [leadResult,organizationResult,municipalityResult,serviceResult,placementResult,eventResult,contractItemResult]=await Promise.all([
     supabase.from("partner_leads").select("id,company_name,contact_name,email,phone,message,status,created_at,municipalities(name),service_categories(name)").order("created_at",{ascending:false}),
     supabase.from("partner_organizations").select("id,name,email,phone,website_url,status").order("name"),
     supabase.from("municipalities").select("code,name").order("name"),
     supabase.from("service_categories").select("id,name").order("name"),
     supabase.from("partner_placements").select("id,status,monthly_price,starts_at,ends_at,municipalities(name,slug),service_categories(name),partner_organizations(name)").order("created_at",{ascending:false}),
     supabase.from("partner_events").select("placement_id"),
+    supabase.from("partner_contract_items").select("id,status,release_reason,partner_contracts(company_name,fortnox_invoice_number,status),partner_placements(municipalities(name),service_categories(name))").order("created_at",{ascending:false}),
   ]);
   const leads=(leadResult.data??[]) as unknown as Lead[];
   const organizations=(organizationResult.data??[]) as Organization[];
   const municipalities=(municipalityResult.data??[]) as Municipality[];
   const services=(serviceResult.data??[]) as Service[];
   const placements=(placementResult.data??[]) as unknown as Placement[];
+  const contractItems=(contractItemResult.data??[]) as unknown as ContractItem[];
   const clicks=(eventResult.data??[]).reduce<Record<string,number>>((sum,event)=>{sum[event.placement_id]=(sum[event.placement_id]??0)+1;return sum;},{});
   const activeCount=placements.filter(item=>item.status==="active").length;
   const monthlyRevenue=placements.filter(item=>item.status==="active").reduce((sum,item)=>sum+Number(item.monthly_price??0),0);
@@ -69,6 +72,15 @@ export default async function PartnerAdminPage({ searchParams }: Props) {
         <div><small>Pris</small><strong>{item.monthly_price?Number(item.monthly_price).toLocaleString("sv-SE")+" kr/mån":"Ej angivet"}</strong><span>{clicks[item.id]??0} klick</span></div>
         <form action={updatePlacementStatus}><input type="hidden" name="id" value={item.id}/><select name="status" defaultValue={item.status}>{Object.entries(placementLabels).map(([value,label])=><option value={value} key={value}>{label}</option>)}</select><button type="submit">Spara</button></form>
       </article>)}</div>}
+    </section>
+
+    <section className="partner-admin-section"><div className="panel-heading"><h2>Avtalade partnerplatser</h2><span>{contractItems.length} totalt</span></div>
+      <div className="partner-placement-table">{contractItems.map(item=><article key={item.id}>
+        <div><small>{item.partner_placements?.service_categories?.name}</small><strong>{item.partner_placements?.municipalities?.name}</strong></div>
+        <div><small>Kund</small><strong>{item.partner_contracts?.company_name}</strong><span>Faktura {item.partner_contracts?.fortnox_invoice_number??"saknas"}</span></div>
+        <div><small>Status</small><strong>{item.status}</strong><span>{item.partner_contracts?.status}</span></div>
+        {item.status!=="released"&&item.status!=="ended"?<form action={releasePartnerMarket}><input type="hidden" name="itemId" value={item.id}/><input name="reason" placeholder="Orsak"/><button type="submit">Frisläpp</button></form>:<span>{item.release_reason??"Frisläppt"}</span>}
+      </article>)}</div>
     </section>
 
     <section className="partner-admin-section"><div className="panel-heading"><h2>Partnerförfrågningar</h2><span>{leads.length} totalt</span></div>
