@@ -18,6 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/sok`, lastModified: updated, changeFrequency: "monthly", priority: 0.5 },
     { url: `${base}/renovera/tak`, lastModified: updated, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/renovera/badrum`, lastModified: updated, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/underhalla/vvs`, lastModified: updated, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/verktyg/takkalkyl`, lastModified: updated, changeFrequency: "monthly", priority: 0.8 },
     { url: `${base}/hitta-foretag`, lastModified: updated, changeFrequency: "weekly", priority: 0.8 },
     { url: `${base}/partner`, lastModified: updated, changeFrequency: "monthly", priority: 0.5 },

@@ -6,6 +6,7 @@ import { guides as staticGuides } from "@/data/guides";
 import { getAllPublishedGuides, getPublishedGuide } from "@/lib/content";
 import { roofGuideSet } from "@/data/roof";
 import { bathroomGuideSet } from "@/data/bathroom";
+import { plumbingGuideSet } from "@/data/plumbing";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -29,7 +30,8 @@ export default async function GuidePage({ params }: Props) {
   const allGuides = await getAllPublishedGuides();
   const inRoofCluster = roofGuideSet.has(guide.slug);
   const inBathroomCluster = bathroomGuideSet.has(guide.slug);
-  const clusterSet = inRoofCluster ? roofGuideSet : inBathroomCluster ? bathroomGuideSet : null;
+  const inPlumbingCluster = plumbingGuideSet.has(guide.slug);
+  const clusterSet = inRoofCluster ? roofGuideSet : inBathroomCluster ? bathroomGuideSet : inPlumbingCluster ? plumbingGuideSet : null;
   const related = allGuides.filter((item) => (clusterSet ? clusterSet.has(item.slug) : item.category === guide.category) && item.slug !== guide.slug).slice(0, 3);
   const jsonLd = {
     "@context": "https://schema.org", "@type": "Article", headline: guide.title,
@@ -41,7 +43,7 @@ export default async function GuidePage({ params }: Props) {
     <main className="article-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <header className="article-hero"><div className="article-container">
-        <Link href={inRoofCluster ? "/renovera/tak" : inBathroomCluster ? "/renovera/badrum" : "/guider"} className="back-link"><ArrowLeft /> {inRoofCluster ? "Allt om tak" : inBathroomCluster ? "Allt om badrum" : "Alla guider"}</Link>
+        <Link href={inRoofCluster ? "/renovera/tak" : inBathroomCluster ? "/renovera/badrum" : inPlumbingCluster ? "/underhalla/vvs" : "/guider"} className="back-link"><ArrowLeft /> {inRoofCluster ? "Allt om tak" : inBathroomCluster ? "Allt om badrum" : inPlumbingCluster ? "Allt om VVS och vatten" : "Alla guider"}</Link>
         <Link href={`/${guide.category}`} className="article-category">{guide.categoryLabel}</Link>
         <h1>{guide.title}</h1><p>{guide.description}</p>
         <div className="article-meta"><span><Clock /> {guide.readingTime} läsning</span><span><ShieldCheck /> Uppdaterad {guide.updated}</span></div>
