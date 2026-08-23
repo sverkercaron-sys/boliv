@@ -54,7 +54,8 @@ export async function purchasePartnerMarkets(formData:FormData){
   await admin.from("partner_contracts").update({invoice_provider:"manual",invoice_status:"pending_creation",invoice_error:null,updated_at:new Date().toISOString()}).eq("id",purchase.contract_id);
  }
 
- const invitation=await admin.auth.admin.inviteUserByEmail(email,{redirectTo:`${process.env.NEXT_PUBLIC_SITE_URL??"https://boliv-olive.vercel.app"}/partnerkonto`,data:{display_name:contactName}});
+ const siteUrl=process.env.NEXT_PUBLIC_SITE_URL??"https://boliv-olive.vercel.app";
+ const invitation=await admin.auth.admin.inviteUserByEmail(email,{redirectTo:`${siteUrl}/auth/callback?next=/partnerkonto/aktivera`,data:{display_name:contactName}});
  if(invitation.data.user){
   await admin.from("partner_members").upsert({organization_id:contract.organization_id,user_id:invitation.data.user.id,role:"owner"});
   await admin.from("partner_invitations").update({accepted_at:new Date().toISOString()}).eq("organization_id",contract.organization_id).eq("email",email);
