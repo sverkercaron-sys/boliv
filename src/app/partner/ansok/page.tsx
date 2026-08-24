@@ -2,8 +2,9 @@ import type{Metadata}from"next";import Link from"next/link";import{ArrowLeft,Bad
 import{createClient}from"@/lib/supabase/server";import{purchasePartnerMarkets}from"../actions";import{MarketPicker,type PartnerMarket}from"./MarketPicker";
 export const metadata:Metadata={title:"Teckna BoLiv Partner",description:"Välj en eller flera lediga marknader och teckna partneravtalet direkt."};
 type Props={searchParams:Promise<{kommun?:string;error?:string}>};
+const MARKET_PAGE_SIZE=1000;const MARKET_PAGE_COUNT=15;
 export default async function PartnerCheckoutPage({searchParams}:Props){
- const params=await searchParams;const supabase=await createClient();const{data}=await supabase.rpc("available_partner_markets");const markets=(data??[])as PartnerMarket[];
+ const params=await searchParams;const supabase=await createClient();const pages=await Promise.all(Array.from({length:MARKET_PAGE_COUNT},(_,page)=>supabase.rpc("available_partner_markets").range(page*MARKET_PAGE_SIZE,(page+1)*MARKET_PAGE_SIZE-1)));const markets=pages.flatMap(({data})=>(data??[])as PartnerMarket[]);
  const ready=Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY);const idempotencyKey=crypto.randomUUID();
  return <main className="partner-form-page"><div className="partner-form-wrap partner-checkout-wrap"><Link href="/partner" className="back-link"><ArrowLeft/>BoLiv Partner</Link>
  <div className="checkout-price-card"><span className="partner-label available">Introduktionserbjudande</span><strong>2 990 kr</strong><small>exkl. moms · per vald bransch och kommun · första året</small><p>Därefter 4 990 kr per plats och år. Alla val samlas på ett avtal och en årsvis förskottsfaktura.</p></div>
