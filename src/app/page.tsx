@@ -23,6 +23,15 @@ export default function HomePage() {
   return (
     <main>
       <section className="hero">
+        <Image
+          className="hero-media"
+          src="/images/boliv-hero-boutique.webp"
+          alt="Ett varmt svenskt hem under den blå kvällshimlen"
+          fill
+          priority
+          sizes="100vw"
+        />
+        <div className="hero-overlay" />
         <div className="container hero-grid">
           <div className="hero-copy">
             <div className="eyebrow"><Sparkles size={16} /> Allt om ditt boende</div>
@@ -42,15 +51,6 @@ export default function HomePage() {
               <Link href="/guider/valja-varmepump">Värmepump</Link>
               <Link href="/guider/renovera-badrum-kostnad">Badrum</Link>
             </div>
-          </div>
-          <div className="hero-photo">
-            <Image
-              src="/images/boliv-hero-blue-hour.webp"
-              alt="Ett varmt och välkomnande svenskt hem i blå timmen"
-              fill
-              priority
-              sizes="(max-width: 900px) 100vw, 46vw"
-            />
           </div>
         </div>
       </section>
